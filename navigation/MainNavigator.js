@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider, MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
@@ -6,14 +6,9 @@ import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
 import LearnScreen from '../screens/LearnScreen';
 import ProgressScreen from '../screens/ProgressScreen';
+import ThemeContext from '../context/ThemeContext'; 
 
 const Stack = createStackNavigator();
-
-const ThemeContext = createContext();
-
-export function useThemeContext() {
-  return useContext(ThemeContext);
-}
 
 export default function MainNavigator() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -24,13 +19,14 @@ export default function MainNavigator() {
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" 
-            component={HomeScreen}
-            options={({ navigation }) => ({
-              headerTitle: 'Home',
-              headerTitleAlign: 'left',
-            })}
-             />
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerTitle: 'Home',
+                headerTitleAlign: 'left',
+              }}
+            />
             <Stack.Screen name="Quiz" component={QuizScreen} />
             <Stack.Screen name="Learn" component={LearnScreen} />
             <Stack.Screen name="Progress" component={ProgressScreen} />
